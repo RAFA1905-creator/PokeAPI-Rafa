@@ -6,10 +6,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.pokeapi.viewmodel.MainmenuViewModel
 
 @Composable
-fun MainmenuScreen(navController: NavController) {
+fun MainmenuScreen(navController: NavController, viewModel: MainmenuViewModel = viewModel()) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -22,7 +24,7 @@ fun MainmenuScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(32.dp))
 
         Button(
-            onClick = { navController.navigate("content") },
+            onClick = { viewModel.navContent(navController) },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Ver datos de la API")
@@ -31,7 +33,7 @@ fun MainmenuScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { navController.navigate("userdata") },
+            onClick = { viewModel.navUserdata(navController) },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Ver datos de tu cuenta")

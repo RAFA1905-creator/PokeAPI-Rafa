@@ -6,42 +6,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Path
-
-data class Pokemon(
-    val id: Int,
-    val name: String,
-    val height: Int,
-    val weight: Int
-)
-
-interface PokeApiService {
-    @GET("pokemon/{name}")
-    suspend fun getPokemon(@Path("name") name: String): Pokemon
-
-    companion object {
-        fun create(): PokeApiService {
-            return Retrofit.Builder()
-                .baseUrl("https://pokeapi.co/api/v2/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(PokeApiService::class.java)
-        }
-    }
-}
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.pokeapi.viewmodel.ContentViewModel
 
 @Composable
-fun ContentScreen() {
-    val api = remember { PokeApiService.create() }
-    var pokemon by remember { mutableStateOf<Pokemon?>(null) }
-    var errorMessage by remember { mutableStateOf<String?>(null) }
-    var isLoading by remember { mutableStateOf(false) }
-
-    val scope = rememberCoroutineScope()
+fun ContentScreen(viewModel: ContentViewModel = viewModel()) {
+    var pokemon by remember { mutableStateOf(viewModel.pokemon) }
+    var errorMessage by remember { mutableStateOf(viewModel.errorMessage) }
+    var isLoading by remember { mutableStateOf(viewModel.isLoading) }
 
     Column(
         modifier = Modifier
@@ -56,17 +28,10 @@ fun ContentScreen() {
 
         Button(
             onClick = {
-                scope.launch {
-                    try {
-                        isLoading = true
-                        val result = api.getPokemon("bulbasaur")
-                        pokemon = result
-                        errorMessage = null
-                    } catch (e: Exception) {
-                        errorMessage = e.message
-                    } finally {
-                        isLoading = false
-                    }
+                viewModel.fetchPokemon("bulbasaur") {
+                    pokemon = viewModel.pokemon
+                    errorMessage = viewModel.errorMessage
+                    isLoading = viewModel.isLoading
                 }
             },
             modifier = Modifier.fillMaxWidth()

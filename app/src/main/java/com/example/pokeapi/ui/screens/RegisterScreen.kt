@@ -1,23 +1,21 @@
 package com.example.pokeapi.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.google.firebase.auth.FirebaseAuth
+import com.example.pokeapi.viewmodel.RegisterViewModel
 
 @Composable
-fun RegisterScreen(navController: NavController) {
-    val auth = FirebaseAuth.getInstance()
-
+fun RegisterScreen(navController: NavController, viewModel: RegisterViewModel = viewModel()) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var errorMensaje by remember { mutableStateOf<String?>(null) }
     var cargando by remember { mutableStateOf(false) }
+    var errorMensaje by remember { mutableStateOf<String?>(null) }
 
     Column(
         modifier = Modifier
@@ -52,20 +50,15 @@ fun RegisterScreen(navController: NavController) {
 
         Button(
             onClick = {
-                if (email.isNotEmpty() && password.isNotEmpty()) {
-                    cargando = true
-                    auth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener { task ->
-                            cargando = false
-                            if (task.isSuccessful) {
-                                navController.navigate("content")
-                            } else {
-                                errorMensaje = task.exception?.localizedMessage ?: "Error desconocido"
-                                Log.e("Register", "Error: ${task.exception?.message}")
-                            }
+                cargando = true
+                viewModel.registro(email, password) { success ->
+                    cargando = false
+                    errorMensaje = viewModel.errorMensaje
+                    if (success) {
+                        navController.navigate("start") {
+                            popUpTo("register") { inclusive = true }
                         }
-                } else {
-                    errorMensaje = "Escribe un email y una contraseña"
+                    }
                 }
             },
             modifier = Modifier.fillMaxWidth(),
@@ -80,3 +73,4 @@ fun RegisterScreen(navController: NavController) {
         }
     }
 }
+

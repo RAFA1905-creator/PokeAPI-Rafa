@@ -1,28 +1,21 @@
 package com.example.pokeapi.ui.screens
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.pokeapi.viewmodel.StartViewModel
 
 @Composable
-fun StartScreen(navController: NavController) {
+fun StartScreen(navController: NavController, viewModel: StartViewModel = viewModel()) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(24.dp), // margen general
+            .padding(24.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -34,7 +27,7 @@ fun StartScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(32.dp))
 
         Button(
-            onClick = { navController.navigate("login") },
+            onClick = { viewModel.navLogin(navController) },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Iniciar sesión")
@@ -43,7 +36,7 @@ fun StartScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { navController.navigate("register") },
+            onClick = { viewModel.navRegister(navController) },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Registrarse")
