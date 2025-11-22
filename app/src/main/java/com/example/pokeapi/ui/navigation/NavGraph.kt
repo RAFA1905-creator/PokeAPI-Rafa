@@ -20,7 +20,7 @@ fun NavGraph(navController: NavHostController) {
         composable(ScreenRoutes.LOGIN) { LoginScreen(navController) }
         composable(ScreenRoutes.REGISTER) { RegisterScreen(navController) }
         composable(ScreenRoutes.MAINMENU) { MainmenuScreen(navController) }
-        composable(ScreenRoutes.CONTENT) { ContentScreen(navController) }
+        composable(ScreenRoutes.CONTENT) { ContentScreen() }
         composable(ScreenRoutes.USERDATA) { UserdataScreen(navController) }
     }
 }
