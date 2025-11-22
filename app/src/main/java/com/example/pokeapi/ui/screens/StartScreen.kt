@@ -42,7 +42,7 @@ fun StartScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        OutlinedButton(
+        Button(
             onClick = { navController.navigate("register") },
             modifier = Modifier.fillMaxWidth()
         ) {

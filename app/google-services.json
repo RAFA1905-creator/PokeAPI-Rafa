@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "595858595160",
+    "project_id": "pokeapi-f36f0",
+    "storage_bucket": "pokeapi-f36f0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:595858595160:android:13dab30bdab2619dc8592d",
+        "android_client_info": {
+          "package_name": "com.example.pokeapi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2QBT1TLJMkAPTJS0PSrLVGB2jRo3Q8IY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
