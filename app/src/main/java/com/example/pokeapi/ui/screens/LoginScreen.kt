@@ -60,7 +60,7 @@ fun LoginScreen(navController: NavController) {
                         .addOnCompleteListener { task ->
                             cargando = false
                             if (task.isSuccessful) {
-                                navController.navigate("content")
+                                navController.navigate("mainmenu")
                             } else {
                                 errorMensaje = "Email o contraseña inválidos"
                                 Log.e("Login", "Error: ${task.exception?.message}")

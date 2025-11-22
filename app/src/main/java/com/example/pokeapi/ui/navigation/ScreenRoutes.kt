@@ -6,4 +6,5 @@ object ScreenRoutes {
     const val REGISTER = "register"
     const val CONTENT = "content"
     const val USERDATA = "userdata"
+    const val MAINMENU = "mainmenu"
 }
